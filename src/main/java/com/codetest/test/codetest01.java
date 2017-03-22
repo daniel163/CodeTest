@@ -13,7 +13,8 @@ public class codetest01 {
         RandomAccessFile aFile = new RandomAccessFile("data/nio-data.txt", "rw");
         FileChannel inChannel = aFile.getChannel();
 
-        ByteBuffer buf = ByteBuffer.allocate(48);
+        //分配一个缓冲区
+        ByteBuffer buf = ByteBuffer.allocate(50);
 
         int bytesRead = inChannel.read(buf);
         while (bytesRead != -1) {

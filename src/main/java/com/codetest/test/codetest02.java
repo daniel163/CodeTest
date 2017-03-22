@@ -5,29 +5,26 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
- * FileChannel读取数据到Buffer中的示例
  * Created by nickzhang on 2017/3/22.
  */
-public class codetest01 {
+public class codetest02 {
     public static void main(String[] args) throws Exception{
         RandomAccessFile aFile = new RandomAccessFile("data/nio-data.txt", "rw");
         FileChannel inChannel = aFile.getChannel();
 
-        //分配一个缓冲区
-        ByteBuffer buf = ByteBuffer.allocate(50);
+        //create buffer with capacity of 48 bytes
+        ByteBuffer buf = ByteBuffer.allocate(48);
 
-        int bytesRead = inChannel.read(buf);
+        int bytesRead = inChannel.read(buf); //read into buffer.
         while (bytesRead != -1) {
 
-            System.out.println("Read " + bytesRead);
-            //反转buffer
-            buf.flip();
+            buf.flip();  //make buffer ready for read
 
-            while(buf.hasRemaining()){
-                System.out.print((char) buf.get());
+            while (buf.hasRemaining()) {
+                System.out.print((char) buf.get()); // read 1 byte at a time
             }
 
-            buf.clear();
+            buf.clear(); //make buffer ready for writing
             bytesRead = inChannel.read(buf);
         }
         aFile.close();
